@@ -1,11 +1,17 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import Header from './components/header/header.js';
+import Timer from './components/timer/timer.js';
+import Word from './components/word/word.js';
+import Form from './components/form/form.js';
 
 function App() {
   const path = 'http://localhost:4040/words';
 
   const [words, setWords] = useState([])
   const [length, setLength] = useState(0)
+  const [duration, setDuration] = useState(0);
+  const [timerOn, setTimerOn] = useState(false);
 
   const getData = () => {
     fetch(path)
@@ -29,34 +35,24 @@ function App() {
     setLength(newWords.length)
   }
 
-  const handleClick = e => {
-    e.preventDefault();
-    console.log(e.currentTarget.children[0].value);
-    checkWord(e.currentTarget.children[0].value);
-    e.currentTarget.reset();
-  }
-
   useEffect(() => {
     getData();
   }, []);
 
   useEffect(() => {
-    console.log('length2:', length);
     if (length < 5) {
       getMoreData();
-      console.log('new:', words);
     }
   }, [length]);
 
   const createdWords = words.map(word => <div>{word}</div>)
 
   return (
-    <div>
-      {createdWords}
-      <form onSubmit={handleClick}>
-        <input type='text' placeholder='type here' />
-        <input type='submit' value='submit' />
-      </form>
+    <div className="main-container">
+      <Header />
+      <Timer setDuration={setDuration} duration={duration} />
+      <Word createdWords={createdWords} />
+      <Form checkWord={checkWord} duration={duration} setTimerOn={setTimerOn} timerOn={timerOn} />
     </div>
   );
 }

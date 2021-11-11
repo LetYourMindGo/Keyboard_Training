@@ -1,0 +1,14 @@
+.word-container{
+  padding: 1rem;
+  margin: 2rem;
+  background-color: rgba(18, 68, 130, 0.9);
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.word-container__word{
+  margin: 0;
+  color: white;
+  font-size: 2rem;
+}
