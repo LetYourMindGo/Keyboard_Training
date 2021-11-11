@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/header/header.js';
 import Timer from './components/timer/timer.js';
 import Word from './components/word/word.js';
@@ -50,9 +51,21 @@ function App() {
   return (
     <div className="main-container">
       <Header />
-      <Timer setDuration={setDuration} duration={duration} />
-      <Word createdWords={createdWords} />
-      <Form checkWord={checkWord} duration={duration} setTimerOn={setTimerOn} timerOn={timerOn} />
+      <Routes>
+        <Route path="/" element={
+          <div>OOOOOOPs</div>
+        } />
+        <Route path="/start" element={
+          <div>
+            <Timer setDuration={setDuration} duration={duration} />
+            <Word createdWords={createdWords} />
+            <Form checkWord={checkWord} duration={duration} setTimerOn={setTimerOn} timerOn={timerOn} />
+          </div>
+        } />
+        <Route path="/results" element={
+          <div>YEEEEEEEEEEy</div>
+        } />
+      </Routes>
     </div>
   );
 }

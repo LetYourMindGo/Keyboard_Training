@@ -1,10 +1,15 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import './form.css'
 
 const Form = ({checkWord, duration, setTimerOn, timerOn}) => {
+
+  const navigate = useNavigate();
+
   const startTimer = (duration, display) => {
     let timer = duration, minutes, seconds;
-    setInterval(() => {
+    if(timerOn){
+      setInterval(() => {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -14,22 +19,26 @@ const Form = ({checkWord, duration, setTimerOn, timerOn}) => {
         display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
-            timer = duration;
-            console.log('0');
-            setTimerOn(false)
-        }
-    }, 1000);
+          timer = duration;
+          setTimerOn(false)
+          navigate('/results')
+          }
+      }, 1000);
+    }
+    return;
   }
+
+  useEffect(() => {
+    const minutes = 60 * duration;
+    const display = document.querySelector('.timer-container__timer');
+    startTimer(minutes, display);
+  }, [timerOn]);
 
   const timerDuration = e => {
     e.preventDefault();
     if(!timerOn){
-      const minutes = 60 * duration,
-          display = document.querySelector('.timer-container__timer');
-      startTimer(minutes, display);
       setTimerOn(true)
     }
-    return;
   };
   
   const handleClick = e => {
