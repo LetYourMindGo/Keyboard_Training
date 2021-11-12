@@ -1,7 +1,7 @@
 import React from 'react'
 import './timer.css'
 
-const Timer = ({setMinutes, setSeconds, minutes, seconds}) => {
+const Timer = ({setMinutes, setSeconds, minutes, seconds, time}) => {
   
   const increaseMinutes = e => {
     e.preventDefault();
@@ -35,13 +35,15 @@ const Timer = ({setMinutes, setSeconds, minutes, seconds}) => {
     }
   }
 
+  console.log('time:', time);
+
   return (
     <div className="timer-container">
       <div className="timer-container__button-plus">
         <button type="submit" className="button-plus__minutes" onClick={increaseMinutes}>+</button>
         <button type="submit" className="button-plus__seconds" onClick={increaseSeconds}>+</button>
       </div>
-      <div className="timer-container__timer">0{minutes}:{seconds}</div>
+      <div className="timer-container__timer">{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
       <div className="timer-container__button-minus">
         <button type="submit" className="button-minus__minutes" onClick={decreaseMinutes}>-</button>
         <button type="submit" className="button-minus__seconds" onClick={decreaseSeconds}>-</button>

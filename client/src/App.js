@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/header/header.js';
 import Landing from './components/landing/landing.js';
 import Name from './components/name/name.js';
@@ -15,11 +15,12 @@ function App() {
   const [words, setWords] = useState([])
   const [length, setLength] = useState(0)
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(1);
   const [timerOn, setTimerOn] = useState(false);
   const [wordCounter, setWordCounter] = useState(0);
-  const [letterCounter, setLetterCounter] = useState(0)
-  const [name, setName] = useState('')
+  const [letterCounter, setLetterCounter] = useState(0);
+  const [name, setName] = useState('');
+  const [time, setTime] = useState(minutes + ":" + seconds);
 
   const getData = () => {
     fetch(path)
@@ -67,9 +68,9 @@ function App() {
         <Route path="/start" element={
           <div className="app__start">
             <Name name={name} />
-            <Timer setMinutes={setMinutes} minutes={minutes} setSeconds={setSeconds} seconds={seconds} />
+            <Timer setMinutes={setMinutes} minutes={minutes} setSeconds={setSeconds} seconds={seconds} time={time} />
             <Word createdWords={createdWords} setLetterCounter={setLetterCounter} letterCounter={letterCounter} />
-            <Form checkWord={checkWord} minutes={minutes} seconds={seconds} setTimerOn={setTimerOn} timerOn={timerOn} />
+            <Form checkWord={checkWord} minutes={minutes} seconds={seconds} setTimerOn={setTimerOn} timerOn={timerOn} setTime={setTime} />
           </div>
         } />
         <Route path="/results" element={

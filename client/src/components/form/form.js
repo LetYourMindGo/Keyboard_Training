@@ -2,27 +2,33 @@ import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import './form.css'
 
-const Form = ({checkWord, minutes, seconds, setTimerOn, timerOn}) => {
+const Form = ({checkWord, minutes, seconds, setTimerOn, timerOn, setTime}) => {
 
   const navigate = useNavigate();
 
   const startTimer = (time, display) => {
     let timer = time, min, sec;
-    if(timerOn){
-      setInterval(() => {
+    console.log(typeof timer);
+    
+
+    if(timerOn && timer !== 0){
+      const interval = setInterval(() => {
         min = parseInt(timer / 60, 10);
         sec = parseInt(timer % 60, 10);
-
+        console.log('tick');
         min = min < 10 ? "0" + min : min;
         sec = sec < 10 ? "0" + sec : sec;
 
-        display.textContent = min + ":" + sec;
+        setTime(display.textContent = min + ":" + sec);
+
         if (--timer < 0) {
-          timer = time;
+          timer = parseInt(time);
           setTimerOn(false)
           navigate('/results')
+          clearInterval(interval)
           }
       }, 1000);
+      console.log('hej');
     }
     return;
   }
