@@ -1,23 +1,51 @@
 import React from 'react'
 import './timer.css'
 
-const Timer = ({setDuration, duration}) => {
+const Timer = ({setMinutes, setSeconds, minutes, seconds}) => {
   
-  const increaseDuration = e => {
+  const increaseMinutes = e => {
     e.preventDefault();
-    setDuration(duration + 1);
+    setMinutes(minutes + 1);
   }
 
-  const decreaseDuration = e => {
+  const increaseSeconds = e => {
     e.preventDefault();
-    setDuration(duration - 1);
+    setSeconds(seconds + 10);
+    if(seconds === 50) {
+      setSeconds(seconds - 50);
+      setMinutes(minutes + 1);
+    }
+  }
+
+  const decreaseMinutes = e => {
+    e.preventDefault();
+    if(minutes > 0) {
+      setMinutes(minutes - 1);
+    }
+  }
+
+  const decreaseSeconds = e => {
+    e.preventDefault();
+    if(seconds > 0 || minutes > 0) {
+      setSeconds(seconds - 10);
+      if(seconds === 0 && minutes > 0) {
+        setMinutes(minutes - 1);
+        setSeconds(seconds + 50);
+      }
+    }
   }
 
   return (
     <div className="timer-container">
-      <button type="submit" className="timer-container__button-plus" onClick={increaseDuration}>+</button>
-      <div className="timer-container__timer">0{duration}:00</div>
-      <button type="submit" className="timer-container__button-minus" onClick={decreaseDuration}>-</button>
+      <div className="timer-container__button-plus">
+        <button type="submit" className="button-plus__minutes" onClick={increaseMinutes}>+</button>
+        <button type="submit" className="button-plus__seconds" onClick={increaseSeconds}>+</button>
+      </div>
+      <div className="timer-container__timer">0{minutes}:{seconds}</div>
+      <div className="timer-container__button-minus">
+        <button type="submit" className="button-minus__minutes" onClick={decreaseMinutes}>-</button>
+        <button type="submit" className="button-minus__seconds" onClick={decreaseSeconds}>-</button>
+      </div>
     </div>
   )
 }
