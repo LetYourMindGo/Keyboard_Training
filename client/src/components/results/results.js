@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import './results.css'
+import axios from 'axios';
 
-const Results = ({wordCounter, minutes, seconds, letterCounter, name}) => {
+const Results = ({wordCounter, setWordCounter, minutes, seconds, letterCounter, setLetterCounter, name, setHistory, history}) => {
   let finalTime, finalSpeed
 
   const navigate = useNavigate();
@@ -22,11 +23,26 @@ const Results = ({wordCounter, minutes, seconds, letterCounter, name}) => {
   };
   getFinalSpeed();
 
-  const redirect = e => {
+  const reset = e => {
     e.preventDefault();
+    setHistory([...history, {
+      name,
+      speed: finalSpeed
+    }])
+    setWordCounter(wordCounter = 0)
+    setLetterCounter(letterCounter = 0)
     navigate('/')
   }
 
+  const uppdateLeaderboard = async () => {
+    const result = {name, speed: finalSpeed}
+    await axios.put('http://localhost:4040/leaderboard', result)
+  }
+
+  useEffect(() => {
+    uppdateLeaderboard()
+  }, [])  
+  console.log('history:', history);
   return (
     <div className="results">
       <div className="results-container">
@@ -38,7 +54,7 @@ const Results = ({wordCounter, minutes, seconds, letterCounter, name}) => {
         </div>
       </div>
       <div className="results__button-container">
-      <button className="results__button" type="submit" onClick={redirect}>Restart</button>
+      <button className="results__button" type="submit" onClick={reset}>Restart</button>
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ import Timer from './components/timer/timer.js';
 import Word from './components/word/word.js';
 import Form from './components/form/form.js';
 import Results from './components/results/results.js';
+import Leaderboard from './components/leaderboard/leaderboard.js';
 
 function App() {
   const path = 'http://localhost:4040/words';
@@ -21,6 +22,7 @@ function App() {
   const [letterCounter, setLetterCounter] = useState(0);
   const [name, setName] = useState('');
   const [time, setTime] = useState(minutes + ":" + seconds);
+  const [history, setHistory] = useState([]);
 
   const getData = () => {
     fetch(path)
@@ -75,7 +77,12 @@ function App() {
         } />
         <Route path="/results" element={
           <div>
-            <Results wordCounter={wordCounter} minutes={minutes} seconds={seconds} letterCounter={letterCounter} name={name} />
+            <Results wordCounter={wordCounter} setWordCounter={setWordCounter} minutes={minutes} seconds={seconds} letterCounter={letterCounter} setLetterCounter={setLetterCounter} name={name} history={history} setHistory={setHistory} />
+          </div>
+        } />
+        <Route path="/leaderboard" element={
+          <div>
+            <Leaderboard />
           </div>
         } />
       </Routes>

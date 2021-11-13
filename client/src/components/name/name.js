@@ -4,7 +4,7 @@ import './name.css'
 const Name = ({name}) => {
   return (
     <div className="name-container">
-      <h2 className="name-container__text">Get ready, {name}!</h2>
+      <h2 className="name-container__text">Good luck, {name}!</h2>
     </div>
   )
 }

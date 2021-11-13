@@ -7,15 +7,12 @@ const Form = ({checkWord, minutes, seconds, setTimerOn, timerOn, setTime}) => {
   const navigate = useNavigate();
 
   const startTimer = (time, display) => {
-    let timer = time, min, sec;
-    console.log(typeof timer);
-    
+    let timer = time, min, sec;    
 
     if(timerOn && timer !== 0){
       const interval = setInterval(() => {
         min = parseInt(timer / 60, 10);
         sec = parseInt(timer % 60, 10);
-        console.log('tick');
         min = min < 10 ? "0" + min : min;
         sec = sec < 10 ? "0" + sec : sec;
 
@@ -28,7 +25,6 @@ const Form = ({checkWord, minutes, seconds, setTimerOn, timerOn, setTime}) => {
           clearInterval(interval)
           }
       }, 1000);
-      console.log('hej');
     }
     return;
   }
